@@ -29,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         AutoScrollTextView autoScrollTextView2= (AutoScrollTextView) findViewById(R.id.astv_test2);
-        autoScrollTextView2.setText("lalalallala22222");
-        autoScrollTextView2.setScrollSpeed(-1);
-        autoScrollTextView2.setScrollTime(4);
-        autoScrollTextView2.setOnScrollStopListener(new AutoScrollTextView.OnScrollStopListener() {
-            @Override
-            public void onScrollStop(@Nullable String param) {
-                Toast.makeText(context, "test2 Stop!", Toast.LENGTH_SHORT).show();
-        }
-        });
+//        autoScrollTextView2.setText("lalalallala22222");
+//        autoScrollTextView2.setScrollSpeed(-1);
+//        autoScrollTextView2.setScrollTime(4);
+//        autoScrollTextView2.setOnScrollStopListener(new AutoScrollTextView.OnScrollStopListener() {
+//            @Override
+//            public void onScrollStop(@Nullable String param) {
+//                Toast.makeText(context, "test2 Stop!", Toast.LENGTH_SHORT).show();
+//        }
+//        });
     }
 }

@@ -27,6 +27,7 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
     private int mScrollSpeed = 1;
     private int mHadScrolled = 0;
     private boolean mIsFresh = false;
+    private boolean mIsListen = false;
 
 
     public AutoScrollTextView(Context context) {
@@ -81,7 +82,7 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
             mCurrentPosition = -mTextWidth;
             mHadScrolled++;
         }
-        postDelayed(this, 10);
+        postDelayed(this, 17);
     }
 
     /**
@@ -110,6 +111,7 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
     public void stopScroll(@Nullable String param) {
         if (mIsFresh) scrollTo(0, 0);
         mIsStop = true;
+        if (mIsListen)
         onScrollStopListener.onScrollStop(param);
     }
 
@@ -154,7 +156,11 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
     }
 
     public void setOnScrollStopListener(OnScrollStopListener onScrollStopListener) {
-        this.onScrollStopListener = onScrollStopListener;
+        if (onScrollStopListener != null){
+            mIsListen=true;
+            this.onScrollStopListener = onScrollStopListener;
+        }
+
     }
 
 

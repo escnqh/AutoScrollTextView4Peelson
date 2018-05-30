@@ -8,13 +8,13 @@
 
     <com.meitu.qihangni.autoscrolltextviewproject.AutoScrollTextView
         android:id="@+id/astv_test1"
-        android:text="1111222"
+        android:text="11111"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <com.meitu.qihangni.autoscrolltextviewproject.AutoScrollTextView
         android:id="@+id/astv_test2"
-        android:text="1111222"
+        android:text="111"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
