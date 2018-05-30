@@ -1,0 +1,2 @@
+# AutoScrollTextView4Peelson
+自定义的跑马灯效果TextView
