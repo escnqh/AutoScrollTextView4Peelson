@@ -82,7 +82,7 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
             mCurrentPosition = -mTextWidth;
             mHadScrolled++;
         }
-        postDelayed(this, 17);
+        postDelayed(this, 20);
     }
 
     /**
@@ -95,7 +95,7 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
     }
 
     /**
-     * 开始滚动
+     * 开始滚动（在停止之后调用）
      */
     public void startScroll() {
         mIsStop = false;
@@ -112,11 +112,12 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
         if (mIsFresh) scrollTo(0, 0);
         mIsStop = true;
         if (mIsListen)
-        onScrollStopListener.onScrollStop(param);
+            onScrollStopListener.onScrollStop(param);
+        this.removeCallbacks(this);
     }
 
     /**
-     * 从头开始滚动
+     * 从头开始滚动（重新开始在这里）
      */
     public void startFromHead() {
         mCurrentPosition = 0;
@@ -156,8 +157,8 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
     }
 
     public void setOnScrollStopListener(OnScrollStopListener onScrollStopListener) {
-        if (onScrollStopListener != null){
-            mIsListen=true;
+        if (onScrollStopListener != null) {
+            mIsListen = true;
             this.onScrollStopListener = onScrollStopListener;
         }
 

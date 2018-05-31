@@ -1,42 +1,83 @@
 package com.meitu.qihangni.autoscrolltextviewproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Context context;
+    private final String TAG = getClass().getSimpleName();
+    private Context mContext;
+    private AutoScrollTextView astv_1;
+    private AutoScrollTextView astv_2;
+    private AutoScrollTextView astv_3;
+    private TextView tv_sample;
+    private Button btn_start;
+    private Button btn_stop;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        context = this;
+        mContext = this;
+        initView();
 
-        AutoScrollTextView autoScrollTextView1 = (AutoScrollTextView) findViewById(R.id.astv_test1);
-        autoScrollTextView1.setText("ceshiceshi11111");
-        autoScrollTextView1.setScrollSpeed(3);
-        autoScrollTextView1.setScrollTime(3);
-        autoScrollTextView1.setFreshWhenStop();
-        autoScrollTextView1.setOnScrollStopListener(new AutoScrollTextView.OnScrollStopListener() {
+
+    }
+
+    private void initView() {
+        astv_1 = (AutoScrollTextView) findViewById(R.id.astv_1);
+        astv_2 = (AutoScrollTextView) findViewById(R.id.astv_2);
+        astv_3 = (AutoScrollTextView) findViewById(R.id.astv_3);
+        tv_sample = (TextView) findViewById(R.id.tv_sample);
+        btn_start = (Button) findViewById(R.id.btn_start);
+        btn_stop = (Button) findViewById(R.id.btn_stop);
+
+        astv_1.setScrollTime(2);
+        astv_2.setScrollTime(3);
+        astv_3.setScrollTime(4);
+
+        astv_1.setScrollSpeed(5);
+        astv_2.setScrollSpeed(-3);
+        astv_3.setScrollSpeed(3);
+
+        tv_sample.setSelected(true);
+
+        btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onScrollStop(@Nullable String param) {
-                Toast.makeText(context, "test1 Stop!", Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                astv_1.startScroll();
+                astv_2.startFromHead();
+                astv_3.startScroll();
             }
         });
 
-        AutoScrollTextView autoScrollTextView2= (AutoScrollTextView) findViewById(R.id.astv_test2);
-//        autoScrollTextView2.setText("lalalallala22222");
-//        autoScrollTextView2.setScrollSpeed(-1);
-//        autoScrollTextView2.setScrollTime(4);
-//        autoScrollTextView2.setOnScrollStopListener(new AutoScrollTextView.OnScrollStopListener() {
-//            @Override
-//            public void onScrollStop(@Nullable String param) {
-//                Toast.makeText(context, "test2 Stop!", Toast.LENGTH_SHORT).show();
-//        }
-//        });
+        btn_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                astv_1.stopScroll(null);
+                astv_2.stopScroll(null);
+                astv_3.stopScroll(null);
+            }
+        });
+
+        astv_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG,"astv_1 click");
+                Intent intent=new Intent(MainActivity.this,BActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
