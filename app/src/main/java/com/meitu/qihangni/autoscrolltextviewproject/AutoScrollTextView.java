@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.util.Log;
 
 
 /**
@@ -17,6 +18,8 @@ import android.util.AttributeSet;
  */
 public class AutoScrollTextView extends AppCompatTextView implements Runnable {
 
+    private final String TAG = this.getClass().getName();
+
     private OnScrollStopListener onScrollStopListener;
 
     private int mCurrentPosition;
@@ -27,7 +30,7 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
     private int mScrollSpeed = 1;
     private int mHadScrolled = 0;
     private boolean mIsFresh = false;
-    private boolean mIsListen = false;
+    private double mRightSpeed = 0;
 
 
     public AutoScrollTextView(Context context) {
@@ -52,6 +55,13 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
     }
 
     @Override
+    protected void onDetachedFromWindow() {
+        stopScroll(null);
+        Log.i(TAG, "AutoScrollTextView is onDetachedFromWindow");
+        super.onDetachedFromWindow();
+    }
+
+    @Override
     public void destroyDrawingCache() {
         super.destroyDrawingCache();
     }
@@ -59,12 +69,16 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
     @Override
     public void setText(CharSequence text, BufferType type) {
         super.setText(text, type);
-        startScroll();//触发时机
+        startScroll();
     }
 
     @Override
     public void run() {
-        mCurrentPosition -= mScrollSpeed;
+        if (mRightSpeed < mScrollSpeed) {
+            mRightSpeed = mRightSpeed + 0.04;//通过速度增长的形式让用户有反应时间
+            Log.i(TAG, "right speed is :" + mRightSpeed);
+        }
+        mCurrentPosition -= mRightSpeed;
         scrollTo(mCurrentPosition, 0);
         if (mIsStop) {
             return;
@@ -100,7 +114,7 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
     public void startScroll() {
         mIsStop = false;
         this.removeCallbacks(this);
-        post(this);
+        postDelayed(this, 1000);
     }
 
     /**
@@ -109,17 +123,20 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
      * @param param 携带可能需要返回的信息
      */
     public void stopScroll(@Nullable String param) {
-        if (mIsFresh) scrollTo(0, 0);
+        if (mIsFresh) {
+            scrollTo(0, 0);
+        }
         mIsStop = true;
-        if (mIsListen)
+        if (null != onScrollStopListener) {
             onScrollStopListener.onScrollStop(param);
+        }
         this.removeCallbacks(this);
     }
 
     /**
      * 从头开始滚动（重新开始在这里）
      */
-    public void startFromHead() {
+    public void reStartScroll() {
         mCurrentPosition = 0;
         mHadScrolled = 0;
         startScroll();
@@ -158,7 +175,6 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
 
     public void setOnScrollStopListener(OnScrollStopListener onScrollStopListener) {
         if (onScrollStopListener != null) {
-            mIsListen = true;
             this.onScrollStopListener = onScrollStopListener;
         }
 

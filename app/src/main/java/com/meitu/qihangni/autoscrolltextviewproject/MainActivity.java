@@ -2,15 +2,12 @@ package com.meitu.qihangni.autoscrolltextviewproject;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 astv_1.startScroll();
-                astv_2.startFromHead();
+                astv_2.reStartScroll();
                 astv_3.startScroll();
             }
         });
