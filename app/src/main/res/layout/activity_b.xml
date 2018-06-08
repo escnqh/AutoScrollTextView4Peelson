@@ -10,7 +10,9 @@
     <com.meitu.qihangni.autoscrolltextviewproject.AutoScrollTextView
         android:id="@+id/astv_b"
         android:text="123123123"
-        android:layout_width="wrap_content"
+        android:singleLine="true"
+        android:maxEms="1000000"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

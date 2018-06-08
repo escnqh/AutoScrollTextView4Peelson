@@ -22,6 +22,7 @@ public class BActivity extends AppCompatActivity {
         AutoScrollTextView autoScrollTextView = (AutoScrollTextView) findViewById(R.id.astv_b);
         autoScrollTextView.setScrollSpeed(4);
         autoScrollTextView.setScrollTime(20);
+        autoScrollTextView.setText("11111111111111111111111111111111111111111111111111111111111111111111111111111");
         autoScrollTextView.setOnScrollStopListener(new AutoScrollTextView.OnScrollStopListener() {
             @Override
             public void onScrollStop(@Nullable String param) {
