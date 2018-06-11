@@ -126,13 +126,13 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
             stopScroll(null);
             return;
         }
-        if (mScrollSpeed >= 0 && getScrollX() <= -(mTextWidth)) {
-            scrollTo(mTextWidth, 0);
-            mCurrentPosition = mTextWidth;
+        if (mScrollSpeed >= 0 && getScrollX() <= -((int)mPaint.measureText(mText))) {
+            scrollTo((int) mPaint.measureText(mText), 0);
+            mCurrentPosition = (int) mPaint.measureText(mText);
             mHadScrolled++;
-        } else if (mScrollSpeed < 0 && getScrollX() >= mTextWidth) {
-            scrollTo(-mTextWidth, 0);
-            mCurrentPosition = -mTextWidth;
+        } else if (mScrollSpeed < 0 && getScrollX() >= (int)mPaint.measureText(mText)) {
+            scrollTo(-(int) mPaint.measureText(mText), 0);
+            mCurrentPosition = -(int) mPaint.measureText(mText);
             mHadScrolled++;
         }
         postDelayed(this, 20);
@@ -142,7 +142,8 @@ public class AutoScrollTextView extends AppCompatTextView implements Runnable {
      * 获取文字宽度
      */
     private void getTextWidth() {
-        mTextWidth = sp2px(mContext,mPaint.measureText(mText));
+        mTextWidth = sp2px(mContext, mPaint.measureText(mText));
+//        mTextWidth =(int)mPaint.measureText(mText);
     }
 
     /**
